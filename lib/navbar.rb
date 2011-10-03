@@ -24,4 +24,18 @@ class Navbar
 		output
 	end
 
+	def xml_output
+		output = ""
+		output << "<li><a href=\"#{@path}\">#{@name}</a></li>" if @name 
+		unless @children.empty?
+			output << "<ul>"
+			@children.each do |child|
+				output << child.html_output
+			end
+			output << "</ul>"
+		end
+		output << "</li>"
+		output
+	end
+
 end
