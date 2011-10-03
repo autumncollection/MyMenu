@@ -11,31 +11,36 @@ class Navbar
 	end
 
 	def html_output
-		output = ""
-		output << "<li><a href=\"#{@path}\">#{@name}</a></li>" if @name 
-		unless @children.empty?
-			output << "<ul>"
-			@children.each do |child|
-				output << child.html_output
-			end
-			output << "</ul>"
-		end
-		output << "</li>"
-		output
+    output = ""
+    output << "<li><a href=\"#{@path}\">#{@name}</a>" if @name
+    unless @children.empty?
+      output << "<ul>"
+      @children.each do |child|
+        output << child.html_output
+      end
+      output << "</ul>"
+    end
+    output << "</li>" if @name
+    output
 	end
 
 	def xml_output
 		output = ""
-		output << "<li><a href=\"#{@path}\">#{@name}</a></li>" if @name 
-		unless @children.empty?
-			output << "<ul>"
-			@children.each do |child|
-				output << child.html_output
-			end
-			output << "</ul>"
+		output << unless @name
+		 "<navbar>"
+		else
+			%{<item href="#{@path}" name="#{@name}"#{@children.empty? ? "/" : ""}>}
 		end
-		output << "</li>"
-		output
+
+		@children.each do |child|
+			output << child.xml_output		
+		end
+
+		output << unless @name
+		 "</navbar>"
+		else
+			@children.empty? ? "" : "</item>"
+		end
 	end
 
 end
