@@ -1,0 +1,13 @@
+<% unless @name %>
+<navbar>
+<% else  %>
+  <item href="<%= @path %>" name="<%= @name %>" <%= @children.empty? ? "/" : "" %> >
+<% end %>
+<%  @children.each do |child| %>
+  <%= child.xml_output %>		
+<% end %>
+<%  unless @name%>
+</navbar>
+<% else %>
+<%= @children.empty? ? "" : "</item>" %>
+<% end %>
